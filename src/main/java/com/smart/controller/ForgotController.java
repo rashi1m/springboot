@@ -22,7 +22,7 @@ public class ForgotController {
 	private UserRepository userRepository;
 	
 	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder; 
+	private BCryptPasswordEncoder bcryptPasswordEncoder; 
 	
 	@Autowired
 	private EmailService emailService;
@@ -52,7 +52,7 @@ public class ForgotController {
 		String message=""
 				+"<div style='border:1px solid #e2e2e2; padding:20px'>"
 				+"<h1>"
-				+"OTP is"
+				+"OTP is "
 				+"<b>"+otp
 				+"</b>"
 				+"</h1>"
@@ -74,12 +74,10 @@ public class ForgotController {
 	}
 	
 	@PostMapping("/verify-otp")
-	public String verifyOtp(@RequestParam("otp") Integer otp, HttpSession session) 
+	public String verifyOtp(@RequestParam("otp") int otp, HttpSession session) 
 	{
-		Integer myOtp=(Integer)session.getAttribute("myotp");
-		System.out.println("User OTP" +otp);
-		System.out.println("Our OTP" +myOtp);
-		
+		int myOtp=(int)session.getAttribute("myotp");
+	
 		String email=(String)session.getAttribute("email");
 		if(myOtp == otp)
 		{
@@ -93,9 +91,10 @@ public class ForgotController {
 				
 			}else {
 				//send change password form
-				return "password_change_form";
+			
 			}
 			
+			return "password_change_form";
 		}else {
 			
 			session.setAttribute("message", "You have enterd wrong otp");
@@ -105,15 +104,16 @@ public class ForgotController {
 	}
 	
 	// change password
-	@PostMapping("/change-password")
-	public String changePassword(@RequestParam("newpassword") String newpassword,HttpSession session)
-	{
-		
-		String email=(String)session.getAttribute("email");
-		User user = this.userRepository.getUserByUserName(email);
-		user.setPassword(this.bCryptPasswordEncoder.encode(newpassword));
-		this.userRepository.save(user);
-		
-		return "redirect:/signin?change=password changed successfully..";
-	}
+	
+	  @PostMapping("/change-password")
+	   public String changePassword(@RequestParam("newpassword") String newpassword,HttpSession
+	  session) {
+	  
+	  String email=(String)session.getAttribute("email"); User user =
+	  this.userRepository.getUserByUserName(email);
+	  user.setPassword(this.bcryptPasswordEncoder.encode(newpassword));
+	  this.userRepository.save(user);
+	  
+	  return "redirect:/signin?change=password changed successfully.."; }
+	 
 }
