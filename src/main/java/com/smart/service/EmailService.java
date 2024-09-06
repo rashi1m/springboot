@@ -18,7 +18,7 @@ public class EmailService {
 
 	public boolean sendEmail(String subject,String message,String to) {
 		boolean f= false;
-		String from = "rashipanchal2003@gmail.com";
+		String from = "rashuf66@gmail.com";
 		String host= "smtp.gmail.com";
 		
 		
@@ -35,7 +35,7 @@ public class EmailService {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication()
 			{
-				return new PasswordAuthentication("rashipanchal2003@gmail.com","jatq syqx wcej hjmv");
+				return new PasswordAuthentication("rashuf66@gmail.com","qfam xmlc brhc rcki");
 			}
 		});
 		
@@ -50,7 +50,7 @@ public class EmailService {
 			m.setFrom(from);
 			m.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
 			m.setSubject(subject);
-			m.setText(message);
+			m.setContent(message,"text/html");
 			Transport.send(m);
 			
 			System.out.println("Sent success.........");
